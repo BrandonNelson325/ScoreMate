@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="navigatingTo"
+      layoutChanged="onLayoutChanged"
+      class="bg-gray-100">
+    <ActionBar title="ScoreMate" class="bg-purple-700 text-white">
+        <NavigationButton visibility="collapsed" />
+        <ActionItem ios.position="left" android.position="actionBar"
+                   text="Target" tap="{{ setWinningScore }}" />
+        <ActionItem ios.position="right" android.position="actionBar"
+                   text="Reset" tap="{{ resetScores }}" />
+    </ActionBar>
+    
+    <GridLayout rows="auto, auto, auto, *" class="px-2">
+        <!-- Winning Score Display -->
+        <StackLayout row="0" class="mt-4" visibility="{{ winningScore > 0 ? 'visible' : 'collapsed' }}">
+            <Label text="{{ 'Target Score: ' + winningScore }}"
+                   class="text-lg text-purple-700 font-bold text-center" />
+        </StackLayout>
+
+        <!-- Current Leader Display -->
+        <StackLayout row="1" class="mt-4" visibility="{{ currentLeader ? 'visible' : 'collapsed' }}">
+            <Label text="{{ 'Current Leader: ' + currentLeader }}"
+                   class="text-base text-green-600 font-bold text-center" />
+        </StackLayout>
+
+        <!-- Add Player Section -->
+        <GridLayout row="2" columns="*, auto" class="mt-4 mb-6 mx-2">
+            <TextField id="playerNameInput" col="0" 
+                      hint="Enter player name" 
+                      returnKeyType="done"
+                      class="input p-4 rounded-l-lg text-lg" />
+            <Button col="1" text="Add" tap="onAddPlayer" 
+                    class="bg-purple-700 text-white font-bold p-2 rounded-r-lg" />
+        </GridLayout>
+
+        <!-- Players List -->
+        <ListView id="playerList" row="3" items="{{ players }}" class="list-group">
+            <ListView.itemTemplate>
+                <GridLayout rows="auto" columns="auto,*,auto,auto,auto,auto,auto" class="py-4">
+                    <!-- Player Name -->
+                    <Label col="0" text="{{ name }}" 
+                           class="{{ $parents['Page'].bindingContext.isLandscape ? 'text-xl' : 'text-base' }} text-black font-semibold" 
+                           textWrap="false"
+                           verticalAlignment="center" />
+                    
+                    <!-- Score Info -->
+                    <StackLayout col="1" orientation="horizontal" class="pl-2" verticalAlignment="center">
+                        <Label text=" - " class="{{ $parents['Page'].bindingContext.isLandscape ? 'text-xl' : 'text-base' }} text-black font-semibold" />
+                        <Label text="{{ score }}" class="{{ $parents['Page'].bindingContext.isLandscape ? 'text-xl' : 'text-base' }} text-black font-bold" />
+                        <Label text="{{ pendingPoints > 0 ? ' (+' + pendingPoints + ')' : pendingPoints < 0 ? ' (' + pendingPoints + ')' : '' }}" 
+                               color="{{ pendingPoints > 0 ? '#16A34A' : '#EF4444' }}"
+                               class="{{ $parents['Page'].bindingContext.isLandscape ? 'text-lg' : 'text-sm' }} font-bold ml-1" 
+                               visibility="{{ pendingPoints !== 0 ? 'visible' : 'collapsed' }}" />
+                        <Label text="{{ pointsToWin }}"
+                               color="#EF4444"
+                               class="{{ $parents['Page'].bindingContext.isLandscape ? 'text-lg' : 'text-sm' }} font-bold ml-1"
+                               visibility="{{ $parents['Page'].bindingContext.winningScore > 0 ? 'visible' : 'collapsed' }}" />
+                    </StackLayout>
+                    
+                    <!-- Score Controls -->
+                    <Button col="2" text="-10" tap="{{ decrementScoreBy10 }}" 
+                            class="{{ $parents['Page'].bindingContext.isLandscape ? 'button-landscape' : 'button-portrait' }} bg-red-400 text-white font-bold rounded-lg mr-2"
+                            verticalAlignment="center" />
+                    <Button col="3" text="-" tap="{{ decrementScore }}" 
+                            class="{{ $parents['Page'].bindingContext.isLandscape ? 'button-landscape' : 'button-portrait' }} bg-red-600 text-white font-bold rounded-lg mr-2"
+                            verticalAlignment="center" />
+                    <Button col="4" text="+" tap="{{ incrementScore }}" 
+                            class="{{ $parents['Page'].bindingContext.isLandscape ? 'button-landscape' : 'button-portrait' }} bg-green-600 text-white font-bold rounded-lg mr-2"
+                            verticalAlignment="center" />
+                    <Button col="5" text="+10" tap="{{ incrementScoreBy10 }}" 
+                            class="{{ $parents['Page'].bindingContext.isLandscape ? 'button-landscape' : 'button-portrait' }} bg-green-400 text-white font-bold rounded-lg mr-2"
+                            verticalAlignment="center" />
+                    
+                    <!-- Delete button -->
+                    <Label col="6" text="✕" tap="{{ removePlayer }}" 
+                           class="{{ $parents['Page'].bindingContext.isLandscape ? 'delete-landscape' : 'delete-portrait' }} text-red-500 font-bold text-center"
+                           verticalAlignment="center" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

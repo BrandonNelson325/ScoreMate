@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input {
+    background-color: white;
+    color: black;
+    font-size: 16;
+    placeholder-color: #6B7280;
+    border-width: 1;
+    border-color: #E5E7EB;
+}
+
+ActionBar {
+    background-color: #4C1D95;
+    color: white;
+    font-size: 20;
+    font-weight: bold;
+}
+
+.list-group {
+    separator-color: transparent;
+}
+
+ListView {
+    background-color: transparent;
+}
+
+/* Base button styles */
+.button-portrait {
+    width: 55;
+    height: 55;
+    font-size: 22;
+    margin: 8;
+    padding: 0;
+}
+
+.button-landscape {
+    width: 65;
+    height: 65;
+    font-size: 26;
+    margin: 10;
+    padding: 0;
+}
+
+/* Delete button styles */
+.delete-portrait {
+    width: 30;
+    height: 55;
+    font-size: 22;
+    margin-left: 16;
+    vertical-alignment: center;
+}
+
+.delete-landscape {
+    width: 40;
+    height: 65;
+    font-size: 26;
+    margin-left: 20;
+    vertical-alignment: center;
+}
